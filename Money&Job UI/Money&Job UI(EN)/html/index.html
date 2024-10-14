@@ -1,0 +1,128 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Money Display</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="money-display">
+        <div id="cash-box" class="money-box">
+            <img src="image/cash.png" alt="Wallet" class="money-icon">
+            <span id="cash">: ¥0</span>
+        </div>
+        <div id="bank-box" class="money-box">
+            <img src="image/bank.png" alt="Bank" class="money-icon">
+            <span id="bank">: ¥0</span>
+        </div>
+        <div id="black-money-box" class="money-box">
+            <img src="image/black_money.png" alt="Black Money" class="money-icon">
+            <span id="black_money">: ¥0</span>
+        </div>
+        <div id="job-box" class="money-box">
+            <img src="image/JOB.png" alt="Job" class="money-icon">
+            <span id="jobLabel">: Loading...</span>
+        </div>
+        <div id="rank-box" class="money-box">
+            <img src="image/RANK.png" alt="Rank" class="money-icon">
+            <span id="jobRankLabel">: Loading...</span>
+        </div>
+    </div>
+    <div id="playerid-display">
+        <div class="playerid-box">
+            <span id="playerIDLabel">ID : Loading...</span>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    var config = {};
+
+    $(function() {
+        $('#money-display').hide();
+        $('#playerid-display').hide();
+
+        window.addEventListener('message', function(event) {
+            var item = event.data;
+            if (item.type === "setConfig") {
+                config = item.config;
+                applyConfig();
+            } else if (item.type === "updateMoneyDisplay") {
+                $('#cash').text(`: ¥${item.cash.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`);
+                $('#bank').text(`: ¥${item.bank.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`);
+                $('#black_money').text(`: ¥${item.black_money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`);
+            } else if (item.type === "ui") {
+                if (item.display) {
+                    $('#money-display').show();
+                    if (config.showPlayerID) {
+                        $('#playerid-display').show();
+                    }
+                } else {
+                    $('#money-display').hide();
+                    $('#playerid-display').hide();
+                }
+            } else if (item.type === "updateJobInfo") {
+                $('#jobLabel').text(`:  ${item.jobName}`);
+                $('#jobRankLabel').text(`:  ${item.jobRank}`);
+            } else if (item.type === "updatePlayerID") {
+                $('#playerIDLabel').text(`ID : ${item.playerID}`);
+            }
+        });
+
+        fetch(`https://${GetParentResourceName()}/loaded`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            body: JSON.stringify({})
+        }).then(resp => resp.json()).then(resp => {
+        }).catch(error => {
+            console.error('Error notifying script of NUI load:', error);
+        });
+    });
+
+    function applyConfig() {
+        $('#money-display').show();
+
+        if (config.showCash) {
+            $('#cash-box').show();
+        } else {
+            $('#cash-box').hide();
+        }
+
+        if (config.showBank) {
+            $('#bank-box').show();
+        } else {
+            $('#bank-box').hide();
+        }
+
+        if (config.showBlackMoney) {
+            $('#black-money-box').show();
+        } else {
+            $('#black-money-box').hide();
+        }
+
+        if (config.showJob) {
+            $('#job-box').show();
+        } else {
+            $('#job-box').hide();
+        }
+
+        if (config.showRank) {
+            $('#rank-box').show();
+        } else {
+            $('#rank-box').hide();
+        }
+
+        if (config.showPlayerID) {
+            $('#playerid-display').show();
+        } else {
+            $('#playerid-display').hide();
+        }
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    position: relative;
+    font-family: 'Arial', sans-serif;
+}
+
+#money-display {
+    position: absolute;
+    top: 13.2vh;  
+    left: 0.3vw;  
+    text-align: left;
+}
+
+#playerid-display {
+    position: absolute;
+    bottom: 28px; 
+    right: 8px;  
+    text-align: right;
+}
+
+.money-box {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 5px;
+    margin-bottom: 5px;
+    width: 160px;
+    border-radius: 8px;
+    border: 2px solid rgba(0, 255, 255, 0.9);
+}
+
+.playerid-box {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 8px;
+    margin-bottom: 5px;
+    width: 60px;
+    border-radius: 8px;
+    border: 2px solid rgba(0, 255, 255, 0.9);
+}
+
+.money-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+#cash, #bank, #black_money {
+    font-size: 16px;
+    color: rgba(251, 255, 1, 0.9);
+    font-weight: bold;
+}
+
+#bank {
+    color: rgba(29, 255, 97, 0.9);
+}
+
+#black_money {
+    color: rgba(255, 0, 0, 0.9);
+}
+
+#jobLabel {
+    font-size: 14px;
+    font-weight: bold;
+    color: rgba(255, 183, 255, 0.9);
+}
+
+#jobRankLabel {
+    font-size: 14px;
+    font-weight: bold;
+    color: rgba(255, 183, 32, 0.9);
+}
+
+#playerIDLabel {
+    font-size: 16px;
+    font-weight: bold;
+    color: rgba(0, 255, 255, 0.9);
+}
+
+#cash-box,
+#bank-box,
+#black-money-box,
+#job-box,
+#rank-box,
+#playerid-display {
+    display: none;
+}
